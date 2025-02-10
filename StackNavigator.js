@@ -85,7 +85,7 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <AudioProvider>
-        <Stack.Navigator initialRouteName={isOnboardWasVisible ? 'OnboardingScreen' : 'OnboardingScreen'}>
+        <Stack.Navigator initialRouteName={isOnboardWasVisible ? 'OnboardingScreen' : 'Home'}>
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
