@@ -17,7 +17,7 @@ import { ArrowLeftIcon, } from 'react-native-heroicons/solid';
 
 const fontSfProTextRegular = 'SFProText-Regular';
 
-const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) => {
+const FavouriteStarDetailsScreen = ({ setSelectedScreen, selectedFavouriteStar, selectedScreen, setSelectedFavouriteStar }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -32,9 +32,9 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
             if (existingFavorites) {
                 const favorites = JSON.parse(existingFavorites);
                 const isFav = favorites.some(fav => 
-                    fav.starTitle === selectedStar.title && 
-                    fav.starConstellation === selectedStar.constellation &&
-                    fav.starType === selectedStar.type
+                    fav.starTitle === selectedFavouriteStar.starTitle && 
+                    fav.starConstellation === selectedFavouriteStar.starConstellation &&
+                    fav.starType === selectedFavouriteStar.starType
                 );
                 setIsFavorite(isFav);
             }
@@ -46,12 +46,12 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
     const toggleFavorite = async () => {
         try {
             const favorite = {
-                starTitle: selectedStar.title,
-                starConstellation: selectedStar.constellation,
-                starType: selectedStar.type,
-                starBrightness: selectedStar.brightness,
-                starDistanceFromEarth: selectedStar.distanceFromEarth,
-                starDiscovery: selectedStar.discovery,
+                starTitle: selectedFavouriteStar.starTitle,
+                starConstellation: selectedFavouriteStar.starConstellation,
+                starType: selectedFavouriteStar.starType,
+                starBrightness: selectedFavouriteStar.starBrightness,
+                starDistanceFromEarth: selectedFavouriteStar.starDistanceFromEarth,
+                starDiscovery: selectedFavouriteStar.starDiscovery,
             };
 
             const existingFavorites = await AsyncStorage.getItem('favorites');
@@ -59,12 +59,12 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
             if (isFavorite) {
                 newFavorites = newFavorites.filter(fav => 
-                    !(fav.zodiac === favorite.zodiac && fav.category === favorite.category && fav.horoscope === favorite.horoscope
+                    !(fav.starTitle === favorite.starTitle && fav.starConstellation === favorite.starConstellation 
                         && fav.starType === favorite.starType && fav.starBrightness === favorite.starBrightness && fav.starDistanceFromEarth === favorite.starDistanceFromEarth
                         && fav.starDiscovery === favorite.starDiscovery
                     )
                 );
-            } else {
+            }  else {
                 newFavorites.unshift(favorite);
             }
 
@@ -121,7 +121,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
                 marginTop: dimensions.height * 0.1,
             }}>
                 <TouchableOpacity
-                    onPress={() => setSelectedScreen('Map')}
+                    onPress={() => setSelectedScreen('Favourites')}
                     style={{
                         borderRadius: dimensions.width * 0.5,
                         zIndex: 100,
@@ -182,7 +182,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                         }}
                     >
-                        {selectedStar.title}
+                        {selectedFavouriteStar.starTitle}
                     </Text>
                     <Text
                         style={{
@@ -224,7 +224,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                             }}
                         >
-                            {selectedStar.constellation}
+                            {selectedFavouriteStar.starConstellation}
                         </Text>
                     </View>
 
@@ -260,7 +260,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                         }}
                     >
-                        {selectedStar.type}
+                        {selectedFavouriteStar.starType}
                     </Text>
 
 
@@ -295,7 +295,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                         }}
                     >
-                        {selectedStar.brightness}
+                        {selectedFavouriteStar.starBrightness}
                     </Text>
 
 
@@ -330,7 +330,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                         }}
                     >
-                        {selectedStar.distanceFromEarth}
+                        {selectedFavouriteStar.starDistanceFromEarth}
                     </Text>
 
 
@@ -364,7 +364,7 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
 
                         }}
                     >
-                        {selectedStar.discovery}
+                        {selectedFavouriteStar.starDiscovery}
                     </Text>
 
 
@@ -377,4 +377,4 @@ const StarDetailsScreen = ({ setSelectedScreen, selectedStar, selectedScreen }) 
     );
 };
 
-export default StarDetailsScreen;
+export default FavouriteStarDetailsScreen;

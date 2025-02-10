@@ -15,7 +15,7 @@ const fontSfProTextRegular = 'SFProText-Regular';
 
 
 
-const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
+const FavouritesScreen = ({ setSelectedScreen, selectedScreen, setSelectedStar, setSelectedFavouriteStar }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [storageImage, setStorageImage] = useState(null);
 
@@ -54,14 +54,14 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
     const removeFavorite = async (favoriteToRemove) => {
         try {
             const updatedFavorites = favorites.filter(fav =>
-                !(fav.zodiac === favoriteToRemove.zodiac && fav.category === favoriteToRemove.category && fav.horoscope === favoriteToRemove.horoscope)
+                !(fav.starTitle === favoriteToRemove.starTitle)
             );
             await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
             setFavorites(updatedFavorites);
             // Alert.alert('Removed', 'Horoscope removed from favorites.');
         } catch (error) {
             console.error('Error removing favorite:', error);
-            Alert.alert('Error', 'Failed to remove horoscope from favorites.');
+            Alert.alert('Error', 'Failed to remove star from favorites.');
         }
     };
 
@@ -149,7 +149,13 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
                         marginBottom: dimensions.height * 0.16,
                     }}>
                         {favorites.map((favorite, index) => (
-                            <View key={index} style={{
+                            <TouchableOpacity 
+                                onPress={() => {
+                                    setSelectedFavouriteStar(favorite);
+                                    setSelectedScreen('FavouriteStarDetails');
+
+                                }}
+                            key={index} style={{
                                 width: '91%',
                                 alignSelf: 'center',
                                 backgroundColor: '#003F8C',
@@ -196,7 +202,7 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
                                             fontWeight: 'bold',
                                             fontWeight: 800,
                                         }}>
-                                        {favorite.zodiac}
+                                        {favorite.starTitle}
                                     </Text>
 
                                     <View style={{
@@ -218,7 +224,7 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
                                                 fontWeight: 400,
                                                 paddingHorizontal: dimensions.width * 0.012,
                                             }}>
-                                            {favorite.category}
+                                            {favorite.starDistanceFromEarth}
                                         </Text>
                                     </View>
                                 </View>
@@ -233,9 +239,9 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen }) => {
                                         fontWeight: 500,
                                         marginTop: dimensions.height * 0.02,
                                     }}>
-                                    {favorite.horoscope}
+                                    {favorite.starDiscovery}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         ))}
                     </View>
                 </ScrollView>

@@ -90,10 +90,8 @@ const HoroscopeDetailsScreen = ({ setSelectedScreen, selectedZodiac }) => {
                 newFavorites = newFavorites.filter(fav => 
                     !(fav.zodiac === favorite.zodiac && fav.category === favorite.category && fav.horoscope === favorite.horoscope)
                 );
-                // Alert.alert('Removed', 'Horoscope removed from favorites.');
             } else {
                 newFavorites.unshift(favorite);
-                // Alert.alert('Success', 'Horoscope saved to favorites!');
             }
 
             await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));

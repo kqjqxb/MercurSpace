@@ -25,10 +25,12 @@ import StarDetailsScreen from './StarDetailsScreen';
 import FavouritesScreen from './FavouritesScreen';
 import { id } from 'date-fns/locale';
 import HoroscopeDetailsScreen from './HoroscopeDetailsScreen';
+import GameScreen from './GameScreen';
+import FavouriteStarDetailsScreen from './FavouriteStarDetailsScreen';
 
 
 const homePagesButtons = [
-  { screen: 'Home', iconImage: require('../assets/icons/homeButtons/homeIcon.png') },
+  { screen: 'Game', iconImage: require('../assets/icons/homeButtons/homeIcon.png') },
   { screen: 'Map', iconImage: require('../assets/icons/homeButtons/mapIcon.png') },
   { screen: 'Favourites', iconImage: require('../assets/icons/homeButtons/favouritesIcon.png') },
   { screen: 'Profile', iconImage: require('../assets/icons/homeButtons/profileIcon.png') },
@@ -115,28 +117,31 @@ const fontSfProTextRegular = 'SFProText-Regular';
 const HomeScreen = () => {
 
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
-  const [selectedScreen, setSelectedScreen] = useState('Home');
+  const [selectedScreen, setSelectedScreen] = useState('Game');
 
   const [selectedStar, setSelectedStar] = useState(null);
+  const [selectedFavouriteStar, setSelectedFavouriteStar] = useState(null);
   const [storageImage, setStorageImage] = useState(null);
   const [selectedZodiac, setSelectedZodiac] = useState(null);
+  const [currentConstellation, setCurrentConstellation] = useState(null);
+  const [currentConstellationId, setCurrentConstellationId] = useState(0);
 
 
   useEffect(() => {
-      const loadUserProfile = async () => {
-          try {
-              const userProfile = await AsyncStorage.getItem('UserProfile');
-              if (userProfile !== null) {
-                  const { image } = JSON.parse(userProfile);
+    const loadUserProfile = async () => {
+      try {
+        const userProfile = await AsyncStorage.getItem('UserProfile');
+        if (userProfile !== null) {
+          const { image } = JSON.parse(userProfile);
 
-                  setStorageImage(image);
-              }
-          } catch (error) {
-              console.error('Error loading user profile:', error);
-          }
-      };
+          setStorageImage(image);
+        }
+      } catch (error) {
+        console.error('Error loading user profile:', error);
+      }
+    };
 
-      loadUserProfile();
+    loadUserProfile();
   }, [selectedScreen]);
 
   return (
@@ -267,13 +272,18 @@ const HomeScreen = () => {
       ) : selectedScreen === 'Profile' ? (
         <ProfileScreen setSelectedScreen={setSelectedScreen} />
       ) : selectedScreen === 'Map' ? (
-        <MapScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedStar={selectedStar} setSelectedStar={setSelectedStar} />
+        <MapScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedStar={selectedStar} setSelectedStar={setSelectedStar} setSelectedFavouriteStar={setSelectedFavouriteStar}/>
       ) : selectedScreen === 'StarDetails' ? (
         <StarDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedStar={selectedStar} setSelectedStar={setSelectedStar} />
+      ) : selectedScreen === 'FavouriteStarDetails' ? (
+        <FavouriteStarDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setSelectedStar={setSelectedStar} selectedFavouriteStar={selectedFavouriteStar} setSelectedFavouriteStar={setSelectedFavouriteStar}/>
       ) : selectedScreen === 'Favourites' ? (
-        <FavouritesScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
+        <FavouritesScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setSelectedStar={setSelectedStar} selectedFavouriteStar={selectedFavouriteStar} setSelectedFavouriteStar={setSelectedFavouriteStar}/>
       ) : selectedScreen === 'HoroscopeDetails' ? (
-        <HoroscopeDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedZodiac={selectedZodiac} setSelectedZodiac={setSelectedZodiac}/>
+        <HoroscopeDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedZodiac={selectedZodiac} setSelectedZodiac={setSelectedZodiac} />
+      ) : selectedScreen === 'Game' ? (
+        <GameScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} currentConstellation={currentConstellation} setCurrentConstellation={setCurrentConstellation} currentConstellationId={currentConstellationId} setCurrentConstellationId={setCurrentConstellationId}
+        />
       ) : null}
 
       {selectedScreen !== 'StarDetails' && selectedScreen !== 'HoroscopeDetails' && (
