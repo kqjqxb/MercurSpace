@@ -196,11 +196,12 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen, setSelectedStar, 
                                             fontSize: dimensions.width * 0.043,
                                             fontFamily: fontSfProTextRegular,
                                             color: 'white',
-                                            textAlign: 'center',
+                                            textAlign: 'left',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             fontWeight: 'bold',
                                             fontWeight: 800,
+                                            maxWidth: '50%',
                                         }}>
                                         {favorite.starTitle}
                                     </Text>
@@ -211,6 +212,7 @@ const FavouritesScreen = ({ setSelectedScreen, selectedScreen, setSelectedStar, 
                                         borderRadius: dimensions.width * 0.5,
                                         alignItems: 'center',
                                         justifyContent: 'center',
+                                        alignSelf: 'flex-start'
                                     }}>
                                         <Text
                                             style={{

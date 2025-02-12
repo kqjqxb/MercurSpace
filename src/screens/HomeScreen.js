@@ -24,7 +24,6 @@ import MapScreen from './MapScreen';
 import StarDetailsScreen from './StarDetailsScreen';
 import FavouritesScreen from './FavouritesScreen';
 import { id } from 'date-fns/locale';
-import HoroscopeDetailsScreen from './HoroscopeDetailsScreen';
 import GameScreen from './GameScreen';
 import FavouriteStarDetailsScreen from './FavouriteStarDetailsScreen';
 
@@ -279,8 +278,6 @@ const HomeScreen = () => {
         <FavouriteStarDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setSelectedStar={setSelectedStar} selectedFavouriteStar={selectedFavouriteStar} setSelectedFavouriteStar={setSelectedFavouriteStar}/>
       ) : selectedScreen === 'Favourites' ? (
         <FavouritesScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setSelectedStar={setSelectedStar} selectedFavouriteStar={selectedFavouriteStar} setSelectedFavouriteStar={setSelectedFavouriteStar}/>
-      ) : selectedScreen === 'HoroscopeDetails' ? (
-        <HoroscopeDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedZodiac={selectedZodiac} setSelectedZodiac={setSelectedZodiac} />
       ) : selectedScreen === 'Game' ? (
         <GameScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} currentConstellation={currentConstellation} setCurrentConstellation={setCurrentConstellation} currentConstellationId={currentConstellationId} setCurrentConstellationId={setCurrentConstellationId}
         />
